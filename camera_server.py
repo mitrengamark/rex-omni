@@ -65,6 +65,26 @@ def video_feed():
     )
 
 
+@app.route('/snapshot')
+def snapshot():
+    """Single frame snapshot - jobb VPN/instabil kapcsolatokhoz"""
+    cam = get_camera()
+    success, frame = cam.read()
+    
+    if not success:
+        return "Camera error", 500
+    
+    # JPEG kódolás
+    ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+    if not ret:
+        return "Encoding error", 500
+    
+    return Response(
+        buffer.tobytes(),
+        mimetype='image/jpeg'
+    )
+
+
 @app.route('/test')
 def test():
     """Test endpoint"""
