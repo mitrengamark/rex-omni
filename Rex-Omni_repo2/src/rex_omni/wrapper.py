@@ -137,13 +137,19 @@ class RexOmniWrapper:
             from transformers import AutoProcessor, Qwen2_5_VLForConditionalGeneration
 
             # Initialize transformers model
+            # Use device_map=None by default to avoid requiring accelerate when users run on CPU
+            default_device_map = None
+            # Use "eager" attention by default instead of flash_attention_2 for broader compatibility
+            # (especially on macOS where flash_attention_2 is not available)
+            default_attn_impl = "eager"
+
             self.model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
                 self.model_path,
                 torch_dtype=kwargs.get("torch_dtype", torch.bfloat16),
                 attn_implementation=kwargs.get(
-                    "attn_implementation", "flash_attention_2"
+                    "attn_implementation", default_attn_impl
                 ),
-                device_map=kwargs.get("device_map", "auto"),
+                device_map=kwargs.get("device_map", default_device_map),
                 trust_remote_code=kwargs.get("trust_remote_code", True),
                 **{
                     k: v
