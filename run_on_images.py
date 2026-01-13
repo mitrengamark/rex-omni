@@ -44,7 +44,7 @@ def main():
     
     # Pipeline inicializálása
     print("🚀 Pipeline inicializálása...\n")
-    print("ℹ️  macOS mód: eager attention használata\n")
+    print("🎮 GPU mód: flash_attention_2 használata\n")
     
     pipeline = FactoryAssemblyPipeline(
         model_path="IDEA-Research/Rex-Omni",

@@ -102,8 +102,8 @@ class FactoryAssemblyPipeline:
                 backend=self.backend,
                 max_tokens=self.max_tokens,
                 temperature=self.temperature,
-                attn_implementation="eager",  # macOS kompatibilitás
-                device_map=None,  # macOS kompatibilitás
+                attn_implementation="sdpa",  # GPU gyorsítás
+                device_map="auto",  # Automatikus GPU használat
             )
             print("✓ Model sikeresen betöltve!\n")
         except Exception as e:

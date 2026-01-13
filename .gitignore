@@ -2,3 +2,4 @@ venv/
 Rex-Omni_repo/
 ComfyUI-RexOmni_repo/
 images/
+__pycache__/

@@ -1,0 +1,104 @@
+{
+  "image_path": "images/download (4).jpeg",
+  "timestamp": "20260113_160641",
+  "processing_time": 5.118147134780884,
+  "categories_searched": [
+    "screwdriver",
+    "wrench",
+    "pliers",
+    "allen key",
+    "hammer",
+    "tweezers",
+    "drill",
+    "soldering iron",
+    "screw",
+    "bolt",
+    "nut",
+    "washer",
+    "PCB",
+    "circuit board",
+    "wire",
+    "cable",
+    "sensor",
+    "motor",
+    "battery",
+    "connector",
+    "LED",
+    "resistor",
+    "capacitor",
+    "gear",
+    "bearing",
+    "spring",
+    "caliper",
+    "multimeter",
+    "tape measure",
+    "ruler",
+    "tape",
+    "solder",
+    "glue",
+    "box",
+    "tray",
+    "bin",
+    "manual",
+    "label",
+    "laptop",
+    "tablet"
+  ],
+  "found_objects": {
+    "wire": [
+      {
+        "type": "box",
+        "coords": [
+          119.3153153153153,
+          158.03603603603602,
+          202.1621621621622,
+          217.1891891891892
+        ]
+      }
+    ],
+    "bin": [
+      {
+        "type": "box",
+        "coords": [
+          0.0,
+          0.0,
+          63.81981981981982,
+          105.06306306306305
+        ]
+      },
+      {
+        "type": "box",
+        "coords": [
+          6.738738738738739,
+          98.58858858858859,
+          108.61261261261261,
+          207.47747747747746
+        ]
+      }
+    ],
+    "label": [
+      {
+        "type": "box",
+        "coords": [
+          0.0,
+          0.0,
+          37.65765765765766,
+          104.47447447447448
+        ]
+      },
+      {
+        "type": "box",
+        "coords": [
+          13.08108108108108,
+          98.8828828828829,
+          106.63063063063062,
+          169.8078078078078
+        ]
+      }
+    ]
+  },
+  "summary": {
+    "total_object_types": 3,
+    "total_objects": 5
+  }
+}
