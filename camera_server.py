@@ -9,7 +9,7 @@ Használat a LAPTOPON:
     python camera_server.py
     
 Majd a SZERVEREN:
-    python live_video_detection.py --stream http://LAPTOP_IP:5000/video
+    python live_video_detection.py --stream http://LAPTOP_IP:5001/video
 """
 
 from flask import Flask, Response
@@ -75,7 +75,7 @@ def test():
             <h1>Camera Stream Test</h1>
             <img src="/video" width="100%">
             <p>Ha látod a kamerát, akkor működik!</p>
-            <p>A szerveren használd: --stream http://LAPTOP_IP:5000/video</p>
+            <p>A szerveren használd: --stream http://LAPTOP_IP:5001/video</p>
         </body>
     </html>
     """
@@ -96,13 +96,13 @@ def index():
             <p><strong>Status:</strong> Running ✓</p>
             <p><strong>Camera ID:</strong> {camera_id}</p>
             <p><strong>Server IP:</strong> {local_ip}</p>
-            <p><strong>Stream URL:</strong> http://{local_ip}:5000/video</p>
+            <p><strong>Stream URL:</strong> http://{local_ip}:5001/video</p>
             <hr>
             <h2>Használat:</h2>
             <ol>
                 <li>Teszteld a stream-et: <a href="/test">/test</a></li>
                 <li>A szerveren futtasd:
-                    <pre>python live_video_detection.py --stream http://{local_ip}:5000/video</pre>
+                    <pre>python live_video_detection.py --stream http://{local_ip}:5001/video</pre>
                 </li>
             </ol>
         </body>
@@ -123,8 +123,8 @@ def main():
     parser.add_argument(
         '--port',
         type=int,
-        default=5000,
-        help='Port szám (alapértelmezett: 5000)'
+        default=5001,
+        help='Port szám (alapértelmezett: 5001)'
     )
     parser.add_argument(
         '--host',
@@ -145,8 +145,8 @@ def main():
     print(f"🌐 Host: {args.host}:{args.port}")
     print(f"\n✓ Server indítása...\n")
     print("="*70)
-    print("Nyisd meg a böngészőben: http://localhost:5000")
-    print("vagy http://LAPTOP_IP:5000 másik gépről")
+    print("Nyisd meg a böngészőben: http://localhost:5001")
+    print("vagy http://LAPTOP_IP:5001 másik gépről")
     print("="*70 + "\n")
     
     app.run(
