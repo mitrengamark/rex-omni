@@ -196,6 +196,21 @@ COMMON_ASSEMBLY_OBJECTS = [
     
     # Eszközök
     "laptop", "tablet",
+    
+    # Átmeneti kategóriák - általános objektumok
+    "face", "person", "human", "man", "woman", "hand",
+    "book", "books", 
+    "air conditioner", "AC unit", "clima", "air conditioning",
+    "phone", "mobile phone", "smartphone", "iPhone", "cell phone",
+    "curtain", "pink curtain", "wall", "ceiling",
+    "keyboard", "mouse", "monitor", "screen", "display",
+    "cup", "mug", "bottle", "glass",
+    "pen", "pencil", "paper", "notebook", "document",
+    "chair", "desk", "table", "furniture",
+    "plant", "flower", "headphones", "glasses", "eyeglasses",
+    "watch", "clock", "backpack", "bag", "purse",
+    "charger", "cable", "remote control", "controller",
+    "shirt", "clothing", "sweater", "jacket",
 ]
 
 # Leíró változatok kikapcsolva - csak általános kategóriák

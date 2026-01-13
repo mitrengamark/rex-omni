@@ -3,3 +3,5 @@ Rex-Omni_repo/
 ComfyUI-RexOmni_repo/
 images/
 __pycache__/
+live_detections/
+pipeline_results/
