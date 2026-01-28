@@ -27,11 +27,29 @@ def get_camera():
     """Kamera singleton"""
     global camera
     if camera is None:
-        camera = cv2.VideoCapture(camera_id)
-        # Kamera beállítások
-        camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-        camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
-        camera.set(cv2.CAP_PROP_FPS, 30)
+        try:
+            camera = cv2.VideoCapture(camera_id)
+            
+            # Macbook kamera beállítások
+            camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+            camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+            camera.set(cv2.CAP_PROP_FPS, 30)
+            camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Minimális buffer
+            
+            # Ellenőrizzük hogy működik-e
+            success, test_frame = camera.read()
+            if not success or test_frame is None:
+                print("⚠️  Kamera inicializálás: első read sikertelen, újrapróbálás...")
+                camera.release()
+                camera = cv2.VideoCapture(camera_id)
+                camera.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+                camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+                camera.set(cv2.CAP_PROP_FPS, 30)
+                camera.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        except Exception as e:
+            print(f"❌ Kamera inicializálás hiba: {e}")
+            raise
+    
     return camera
 
 
@@ -69,20 +87,28 @@ def video_feed():
 def snapshot():
     """Single frame snapshot - jobb VPN/instabil kapcsolatokhoz"""
     cam = get_camera()
-    success, frame = cam.read()
     
-    if not success:
-        return "Camera error", 500
+    # Próbáljuk meg többször ha első alkalom sikertelen
+    max_retries = 3
+    for attempt in range(max_retries):
+        success, frame = cam.read()
+        
+        if success and frame is not None:
+            # JPEG kódolás
+            ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+            if ret and buffer is not None:
+                return Response(
+                    buffer.tobytes(),
+                    mimetype='image/jpeg'
+                )
+        
+        # Ha sikertelen, várj egy kicsit és próbálj újra
+        if attempt < max_retries - 1:
+            import time
+            time.sleep(0.1)
     
-    # JPEG kódolás
-    ret, buffer = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
-    if not ret:
-        return "Encoding error", 500
-    
-    return Response(
-        buffer.tobytes(),
-        mimetype='image/jpeg'
-    )
+    # Ha mind a 3 próba sikertelen
+    return "Camera not ready", 503
 
 
 @app.route('/test')
