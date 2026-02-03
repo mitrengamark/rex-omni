@@ -174,15 +174,29 @@ class HeadlessCameraDetection:
         
         print("✓ Camera server elérhető!\n")
         
-        # Test frame
-        try:
-            test_frame = self.frame_grabber.get_frame()
-            if test_frame is None:
-                raise RuntimeError("Üres frame")
-            h, w = test_frame.shape[:2]
-            print(f"✓ Test frame OK - {w}x{h}\n")
-        except Exception as e:
-            raise RuntimeError(f"❌ Frame teszt hiba: {e}")
+        # Test frame - több próbálkozással (Macbook kamera néha lassú)
+        print("📸 Kamera teszt...")
+        test_success = False
+        for attempt in range(5):
+            try:
+                test_frame = self.frame_grabber.get_frame()
+                if test_frame is not None:
+                    h, w = test_frame.shape[:2]
+                    print(f"✓ Kamera OK - {w}x{h}\n")
+                    test_success = True
+                    break
+            except Exception as e:
+                if attempt < 4:
+                    print(f"   Próba {attempt + 1}/5 - várakozás...")
+                    import time
+                    time.sleep(0.5)
+                else:
+                    print(f"⚠️  Kamera teszt sikertelen 5 próba után")
+                    print(f"   Hiba: {e}")
+                    print(f"   A detekció folytatódik, de lehet hogy lassabb lesz.\n")
+        
+        if not test_success:
+            print("⚠️  WARNING: Kamera lehet instabil, de folytatom...\n")
     
     def detect_on_frame(self, frame: np.ndarray) -> dict:
         """

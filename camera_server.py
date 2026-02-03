@@ -88,8 +88,13 @@ def snapshot():
     """Single frame snapshot - jobb VPN/instabil kapcsolatokhoz"""
     cam = get_camera()
     
-    # Próbáljuk meg többször ha első alkalom sikertelen
-    max_retries = 3
+    # Buffer flush - olvassunk pár frame-et hogy friss legyen
+    # Macbook kameránál a buffer-ben gyakran lejárt frame van
+    for _ in range(3):
+        cam.read()
+    
+    # Most jöjjön a tényleges snapshot
+    max_retries = 5
     for attempt in range(max_retries):
         success, frame = cam.read()
         
@@ -105,9 +110,10 @@ def snapshot():
         # Ha sikertelen, várj egy kicsit és próbálj újra
         if attempt < max_retries - 1:
             import time
-            time.sleep(0.1)
+            time.sleep(0.05)
     
-    # Ha mind a 3 próba sikertelen
+    # Ha mind az 5 próba sikertelen
+    print(f"⚠️  Snapshot sikertelen {max_retries} próba után")
     return "Camera not ready", 503
 
 
